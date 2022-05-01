@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block con %}
+
+{% load mathfilters %}
+
+    <!-- {{ 1|add:2 }}
+    {{ 1|sub:2 }}
+    {{ 1|mul:2 }}
+    {{ 1|div:2 }}
+    {{ 1|intdiv:2 }}
+    {{ 1|mod:2 }}
+    {{ 2|add:2|mul:2 }} -->
+
+
+
+    <br>
+    <h1>BOARD PAGE</h1>
+
+    <br>
+    <a href="{% url 'board:create' %}"><button>글작성</button></a>
+    <br><br>
+
+    <table border="1">
+        <tr>
+            <th>NO</th>
+            <th>SUBJECT</th>
+            <th>SUMMARY</th>
+            <th>WRITER</th>
+            <th>LIKEY</th>
+        </tr>
+        {% if bset %}
+            {% for i in bset %}
+                <tr>
+                    <td>{{ bset.start_index|add:forloop.counter0 }}</td>
+                    <td><a href="{% url 'board:detail' i.id %}">{{ i.subject }}</a></td>
+                    <td>{{ i.summary }}</td>
+                    <td>{{ i.writer }}</td>
+                    <td>{{ i.likey.count }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            {% if kw %}
+                <tr>
+                    <th colspan="5">검색 결과가 없습니다😟</th>
+                </tr>
+            {% else %} 
+                <tr>
+                    <th colspan="5">첫번째 게시글을 작성해주세요😉</th>
+                </tr>
+            {% endif %}
+        {% endif %}
+    </table>
+
+    <br><br>
+    {% if bset.has_previous %}
+        <a href="{% url 'board:index' %}?page=1&cate={{cate}}&kw={{kw}}"><button>홈</button></a>
+        <a href="{% url 'board:index' %}?page={{ bset.previous_page_number }}"><button>이전</button></a>
+    {% else %}
+        <button disabled>홈</button>
+        <button disabled>이전</button>
+    {% endif %}
+
+
+    {% for i in bset.paginator.page_range %}
+        {% if i >= bset.number|sub:5 and bset.number|add:4 >= i %}
+            <a href="{% url 'board:index' %}?page={{i}}"><button {% if bset.number == i %} disabled {% endif %}>{{i}}</button></a>
+        {% endif %}
+    {% endfor %}
+
+    
+    {% if bset.has_next %}
+        <a href="{% url 'board:index' %}?page={{ bset.next_page_number }}"><button>다음</button></a>
+        <a href="{% url 'board:index' %}?page={{ bset.paginator.num_pages }}"><button>마지막</button></a>
+    {% else %}
+        <button disabled>다음</button>
+        <button disabled>마지막</button>
+    {% endif %}
+
+    <br><br>
+    <form>
+        <select name="cate">
+            <option value="sub" {% if cate == "sub" %} selected {% endif %}>제목</option>
+            <option value="wri" {% if cate == "wri" %} selected {% endif %}>작성자</option>
+            <option value="con" {% if cate == "con" %} selected {% endif %}>내용</option>
+        </select>
+
+        <input type="text" name="kw" value="{{kw}}" size="40">
+
+        <button>검색</button>
+    </form>
+    <style>
+        th, td{
+            border-bottom: 1px solid grey;
+        }
+    </style>
+{% endblock %}

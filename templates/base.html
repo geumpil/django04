@@ -1,0 +1,68 @@
+{% if request.user.is_authenticated %}
+    <div class="menubar">
+        <a href="{% url 'acc:index' %}" class="menu">HOME</a>
+        <a href="{% url 'board:index' %}" class="menu">BOARD</a>
+        <a href="{% url 'trans:index' %}" class="menu">TRANS</a>
+        <a href="{% url 'vote:index' %}" class="menu">VOTE</a>
+        <a href="{% url 'acc:profile' %}" class="menu">PROFILE</a>
+        <a href="{% url 'acc:logout' %}" class="menu">LOGOUT</a>
+        <span class="connection">* 접속중인 계정 : <b>{{ user }}</b></span>
+    </div>
+{% else %}
+    <div>
+        <a href="{% url 'acc:index' %}" class="menu">HOME</a>
+        <a href="{% url 'acc:login' %}" class="menu">LOGIN</a>
+        <a href="{% url 'acc:signup' %}" class="menu">SIGNUP</a>
+    </div>
+{% endif %}
+
+
+<hr>
+
+{% for i in messages %}
+    <div class="{{i.tags}}">
+    <b>{{ i.tags|upper }}</b> {{ i.message }}
+    </div>
+{% endfor %}
+
+{% block con %}
+{% endblock %}
+
+<style>
+    .error{
+        background-color: #DC143C;
+        color:#ffff00
+    }
+    .success{
+        background-color: #008080;
+    }
+    .info{
+        background-color: #C0C0C0;
+    }
+    .warning{
+        background-color: #B8860B;
+    }
+
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    .menubar{
+        background-color: #996699;
+        line-height: 60px;
+    }
+    .connection{
+        margin-left:60px;
+        color: #F0E68C;
+    }
+    .menu{
+        text-decoration: none;
+        font-size: 30px;
+        color: white;
+        font-weight: bold;
+        margin-left: 45px;
+    }
+    .menu:hover{
+        color:yellow;
+    }
+</style>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block con %}
+
+<br><br>
+<h1><b>{{ b.subject }}</b></h1>
+<br>
+
+<img src="{{ b.writer.getpic }}" width="200px">
+<br>
+<div>written by <b>{{b.writer}}</b></div>
+<br>
+<textarea cols="80" rows="5" disabled>{{b.content}}</textarea>
+<br><br>
+<a href="{% url 'board:index' %}"><button>목록</button></a>
+{% if user == b.writer %}
+<a href="{% url 'board:update' b.id %}"><button>수정</button></a>
+<a href="{% url 'board:delete' b.id %}"><button>삭제</button></a>
+{% endif %}
+
+{% if user in b.likey.all %}
+    <a href="{% url 'board:unlikey' b.id %}"><button>좋아요취소💢</button></a>
+{% else %}
+    <a href="{% url 'board:likey' b.id %}"><button>좋아요💗</button></a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block con %}
+   <h1>{{user}}'S UPDATE PAGE</h1>
+   <form method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+        <table>
+            <tr>
+                <th>PASSWORD</th>
+                <td><input type="password" name="upass"></td>
+            </tr>
+            <tr>
+                <th>EMAIL</th>
+                <td><input type="text" name="uemail" value="{{user.email}}"></td>
+            </tr>
+            <tr>
+                <th>AGE</th>
+                <td><input type="number" name="uage" value="{{user.age}}"></td>
+            </tr>
+            <tr>
+                <th>PIC</th>
+                <td><input type="file" name="upic" ></td>
+            </tr>
+            <tr>
+                <th>COMMENT</th>
+                <td><textarea cols="50" rows="5" name="ucom"></textarea></td>
+            </tr>      
+        </table>
+        <button>수정완료</button>
+    </form>
+   
+{% endblock %}

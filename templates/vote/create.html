@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block con %}
+    <h1><b>토픽 생성</b></h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" size="30" name="sub"> <br><br>
+        <textarea cols="40" rows="5" name="con"></textarea> <br><br>
+
+        <hr>
+        <button type="button" onclick="make_choice()">보기생성</button>
+        <button>토픽생성</button>
+
+        <div id="here"></div>
+    </form>
+
+
+    <script>
+        function make_choice(){
+            d = document.getElementById("here");
+            n = document.createElement("div");
+            n.innerHTML = "보기 <input type='text' name='chname'> <br><br>"
+            d.appendChild(n);
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block con %}
+<br>
+<h1>FREE TRANSLATION</h1>
+
+<form method="post" name="transForm">
+    {% csrf_token %}
+    <br>
+    <textarea cols="60" rows="4" name="bf" placeholder="번역할 내용을 입력하세요.">{{ bf }}</textarea>
+    <br><br>
+    <b>FROM</b>
+    <select name="fr">
+       {% for code, name in nd.items %}
+            <option value="{{code}}" {% if fr == code %} selected {% endif %}>{{ name|upper }}</option>
+       {% endfor %}
+    </select>
+
+    <b>TO</b>
+    <select name="to">
+        {% for code, name in nd.items %}
+            <option value="{{code}}" {% if to == code %} selected {% endif %}>{{ name|upper }}</option>
+       {% endfor %}
+    </select>
+
+    <button type="button" onclick="trans()">번역하기</button>
+    <br><br>    
+    <textarea cols="60" rows="4" disabled>{{ af }}</textarea>
+</form>
+
+<style>
+    textarea {
+        font-size: 25px;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    function trans(){
+        f = document.transForm;
+        if(!f.bf.value){
+            alert("번역할 문장을 입력해주세요");
+        }else if(f.fr.value == f.to.value){
+            alert("서로 다른 언어를 선택해주세요");
+        }else{
+            f.submit();
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block con %}
+    <br>
+    <h1><b>게시글 작성 페이지</b></h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="제목을 입력하세요" name="sub"><br><br>
+        <textarea cols="80" row="8" placeholder="내용을 입력하세요" name="con"></textarea><br><br>
+        <button>글작성</button>
+    </form>
+{% endblock %}

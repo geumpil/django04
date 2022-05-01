@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block con %}
+    <br>
+    <h1>{{ user }}님의 프로필</h1>
+
+    <img src="{{ user.getpic }}" width="470px">
+    <br><br>
+    <table>
+        <tr>
+            <th>USERNAME</th>
+            <td><input type="text" value="{{ user }}" disabled></td>
+        </tr>
+        <tr>
+            <th>AGE</th>
+            <td><input type="number" value="{{ user.age }}" disabled></td>
+        </tr>
+        <tr>
+            <th>EMAIL</th>
+            <td><input type="text" value="{{ user.email }}" disabled></td>
+        </tr>
+        <tr>
+            <th>COMMENT</th>
+            <td><textarea cols="50" rows="5" disabled>{{ user.comment }}</textarea></td>
+        </tr>      
+    </table>
+
+    <a href="{% url 'acc:update' %}"><button>정보수정</button></a>
+    <button type="button" id="delbutton" onclick="make_del()">계정삭제</button>
+
+    <form method="POST" id="here" action="{% url 'acc:delete' %}">
+        {% csrf_token %}
+    </form>
+
+    <script>
+        function make_del(){
+            d = document.getElementById("here");
+            bu = document.getElementById("delbutton");
+            bu.setAttribute("disabled", "true");
+            fo = document.createElement("div");
+            fo.innerHTML = "<br><h4><b>삭제하시려면 패스워드를 입력해주세요</b></h4><hr><b>PASSWORD CHECK</b> <input type='password' name='pwck'> <button>삭제</button><br><hr>";
+            d.appendChild(fo);
+        }
+    </script>
+{% endblock %}
